@@ -3,18 +3,33 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
-trigger:
-- main
-
 pool:
   vmImage: ubuntu-latest
 
 steps:
-- script: echo Hello, world!
+- script: echo Azure Databricks Rocks!
   displayName: 'Run a one-line script'
 
 - script: |
     echo Add other tasks to build, test, and deploy your project.
     echo See https://aka.ms/yaml
   displayName: 'Run a multi-line script'
+  
 
+
+- task: configuredatabricks@0
+  inputs:
+    url: 'https://adb-4433353838071267.7.azuredatabricks.net/?o=4433353838071267'
+    token: 'dapibe15e42929e3d6e3fb45ef37bf96729d'
+
+
+- task: startcluster@0
+  inputs:
+    clusterid: '0527-180754-mogul636'
+
+
+
+- task: executenotebook@0
+  inputs:
+    notebookPath: '/Workspace/Users/babal@microsoft.com/mlflow/ML End-to-End Example (Azure)'
+    existingClusterId: '0527-180754-mogul636'
