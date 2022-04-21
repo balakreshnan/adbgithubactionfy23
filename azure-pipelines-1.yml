@@ -31,5 +31,5 @@ steps:
 
 - task: executenotebook@0
   inputs:
-    notebookPath: '/Shared/mlflow/MLEnd-to-EndExample'
+    notebookPath: '/Shared/mlflow/MLEnd-to-EndExampleM'
     existingClusterId: '0527-180754-mogul636'
