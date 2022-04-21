@@ -383,11 +383,11 @@ new_model_version = mlflow.register_model(f"runs:/{best_run.run_id}/model", mode
 # COMMAND ----------
 
 # Archive the old model version
-client.transition_model_version_stage(
-  name=model_name,
-  version=model_version.version,
-  stage="Archived",
-)
+#client.transition_model_version_stage(
+#  name=model_name,
+#  version=model_version.version,
+#  stage="Archived",
+#)
 
 # Promote the new model version to Production
 client.transition_model_version_stage(
