@@ -31,5 +31,5 @@ steps:
 
 - task: executenotebook@0
   inputs:
-    notebookPath: '/Workspace/Users/babal@microsoft.com/mlflow/ML End-to-End Example (Azure)'
+    notebookPath: '/Shared/mlflow/MLEnd-to-EndExample'
     existingClusterId: '0527-180754-mogul636'
