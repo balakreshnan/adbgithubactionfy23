@@ -332,7 +332,7 @@ with mlflow.start_run(run_name='xgboost_models'):
     algo=tpe.suggest, 
     max_evals=96,
     trials=spark_trials, 
-    rstate=np.random.RandomState(123)
+    rstate=np.random.default_rng(123)
   )
 
 # COMMAND ----------
