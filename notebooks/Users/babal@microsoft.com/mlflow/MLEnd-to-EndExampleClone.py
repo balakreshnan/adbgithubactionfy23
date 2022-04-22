@@ -37,16 +37,6 @@
 
 # COMMAND ----------
 
-import mlflow
-import mlflow.pyfunc
-import mlflow.sklearn
-import numpy as np
-import uuid
-
-mlflow.set_experiment("/Shared/mlflow/MLEnd-to-EndExampleM1" + str(uuid.uuid4()) + "/")
-
-# COMMAND ----------
-
 !wget https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-red.csv
 
 # COMMAND ----------
@@ -393,17 +383,17 @@ new_model_version = mlflow.register_model(f"runs:/{best_run.run_id}/model", mode
 # COMMAND ----------
 
 # Archive the old model version
-#client.transition_model_version_stage(
-#  name=model_name,
-#  version=model_version.version,
-#  stage="Archived",
-#)
+client.transition_model_version_stage(
+  name=model_name,
+  version=model_version.version,
+  stage="Archived",
+)
 
-# Promote the new model version to Production
+#Promote the new model version to Production
 client.transition_model_version_stage(
   name=model_name,
   version=new_model_version.version,
-  stage="Production",
+  stage="Production", 
 )
 
 # COMMAND ----------
