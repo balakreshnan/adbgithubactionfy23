@@ -34,7 +34,7 @@ jobs:
         # Artifact name
         name: notebookpath # optional
         # Destination path
-        path: /* # optional
+        path: /notebooks/Users/babal@microsoft.com # optional
     - name: install-databricks-cli
       uses: microsoft/install-databricks-cli@v1.0.0
     - name: databricks-import-directory
