@@ -37,6 +37,9 @@ jobs:
     - name: Run build script
       run: "ls -l"
       shell: bash
+    - name: Find Path
+      run: pwd
+      shell: bash
     - name: databricks-import-directory
       uses: microsoft/databricks-import-notebook@v1.0.0
       with:
