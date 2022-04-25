@@ -57,14 +57,14 @@ jobs:
       uses: Herman-Wu/databrick-notebook-run-action@released
       with:
         # URL of the databrick server
-        databrick-server-uri: "https://adb-3585044229337591.11.azuredatabricks.ne" # default is https://adb-XXXX.XX.azuredatabricks.net
+        databrick-server-uri: "https://adb-3585044229337591.11.azuredatabricks.net" # default is https://adb-XXXX.XX.azuredatabricks.net
         # Databrick Access Token
         databrick-token: "dapi0b04a66cf7734b430110ab84a313beda-2" # default is abcdefghijk
         # Databrick Cluster ID
         databrick-cluster-id: "0422-113043-4dxx0ah" # default is abcdefghijk
         # Notebook in Databrick
-        databrick-local-path: "notebooks/Users/babal@microsoft.com/mlflow/" # default is github/workspace/notebooks
+        databrick-local-path: "notebooks/Users/babal@microsoft.com/mlflow/ML End-to-End Example (Azure)" # default is github/workspace/notebooks
         # Workspace in Databrick
         databrick-workspace-path: "/Repos/babal@microsoft.com/adbgithubactionfy23/notebooks/Users/babal@microsoft.com/mlflow/" # default is Users/xxx@domain.com
         # File path to save process log
-        databrick-outfile-path: "notebooks/Users/babal@microsoft.com/mlflow/" # default is github/workspace/notebooks
+        databrick-outfile-path: "/home/runner/work/adbgithubactionfy23/log/" # default is github/workspace/notebooks
