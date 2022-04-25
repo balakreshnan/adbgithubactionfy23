@@ -28,6 +28,13 @@ jobs:
     # Runs a single command using the runners shell
     - name: Send greeting
       run: echo "Hello ${{ github.event.inputs.name }}"
+    - name: Download a Build Artifact
+      uses: actions/download-artifact@v3.0.0
+        with:
+          # Artifact name
+          name: notebookpath # optional
+          # Destination path
+          path: / # optional
     - name: install-databricks-cli
       uses: microsoft/install-databricks-cli@v1.0.0
     - name: databricks-import-directory
