@@ -1,74 +1,107 @@
-# Azure Databricks Build Pipeline
-# azure-pipelines.yml
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
 
 trigger:
-- release
+- master
+- develop
+pr:
+  autoCancel: true
+  branches:
+    include:
+    - master
 
 pool:
-  name: Hosted Ubuntu 1604
+  vmImage: 'windows-2019'
+
+name: $(BuildID)
 
 steps:
-- task: UsePythonVersion@0
-  displayName: 'Use Python 3.7'
+- task: PowerShell@2
+  displayName: 'Configure Environment'
   inputs:
-    versionSpec: 3.7
+    targetType: 'inline'
+    script: |
+      $c = @"
+      {
+          "BearerToken": "$(BearerToken)",
+          "Region": "$(AzureRegion)",
+          "TenantId": "$(TenantId)",
+          "ApplicationId": "$(ApplicationId)",
+          "Secret": "$(Secret)",
+          "DatabricksOrgId": "$(DatabricksOrgId)",
+          "ResourceGroupName": "$(ResourceGroup)",
+          "SubscriptionId": "$(SubscriptionId)",
+          "WorkspaceName": "$(Workspace)",
+          "ClusterId": "$(ClusterId)",
+          "Username": "$(TestUser)",
+          "InstancePoolId": "$(InstancePoolId)",
+          "SparkVersion": "$(SparkVersion)",
+          "AddLibraryClusterId": "$(AddLibraryClusterId)",
+          "AddLibraryInputClusterId": "$(AddLibraryInputClusterId)",
+          "RemoveLibraryClusterId": "$(RemoveLibraryClusterId)",
+          "KeyVault": "$(KeyVault)"
+      }
+      "@
+      Set-Content .\config.json $c
+      Remove-Item .\TestResults.xml -Force -ErrorAction SilentlyContinue
+    pwsh: true
+    workingDirectory: 'Tests'
 
-- script: |
-    pip install pytest requests setuptools wheel
-    pip install -U databricks-connect==6.4.*
-  displayName: 'Load Python Dependencies'
+- task: PowerShell@2
+  displayName: 'Windows Powershell - Bearer'
+  inputs:
+    targetType: 'inline'
+    script: |
+      $Mode="Bearer"
+      Install-Module Pester -MinimumVersion 4.4.2 -MaximumVersion 4.10.1 -Scope CurrentUser -SkipPublisherCheck -Force
+      Import-Module Pester -MinimumVersion 4.4.2 -MaximumVersion 4.10.1 
+      Set-Location "./Tests"
+      $Edition = $PSVersionTable.PSEdition
+      Invoke-Pester -Script @{Path = "./*.tests.ps1"; Parameters = @{mode=$Mode}} -OutputFile "TestResults-$Edition-$Mode.xml" -OutputFormat NUnitXML
+    pwsh: false
 
-- script: |
-    echo "y
-    $(WORKSPACE-REGION-URL)
-    $(CSE-DEVELOP-PAT)
-    $(EXISTING-CLUSTER-ID)
-    $(WORKSPACE-ORG-ID)
-    15001" | databricks-connect configure
-  displayName: 'Configure DBConnect'
+- task: PowerShell@2
+  displayName: 'Powershell Core - ServicePrincipal'
+  inputs:
+    targetType: 'inline'
+    script: |
+      $Mode="ServicePrincipal"
+      Install-Module Pester -MinimumVersion 4.4.2 -MaximumVersion 4.10.1 -Scope CurrentUser -SkipPublisherCheck -Force
+      Import-Module Pester -MinimumVersion 4.4.2 -MaximumVersion 4.10.1 
+      Set-Location "./Tests"
+      $Edition = $PSVersionTable.PSEdition
+      Invoke-Pester -Script @{Path = "./*.tests.ps1"; Parameters = @{mode=$Mode}} -OutputFile "TestResults-$Edition-$Mode.xml" -OutputFormat NUnitXML
+    pwsh: true
 
-- checkout: self
-  persistCredentials: true
-  clean: true
-
-- script: git checkout release
-  displayName: 'Get Latest Branch'
-
-- script: |
-    python -m pytest --junit-xml=$(Build.Repository.LocalPath)/logs/TEST-LOCAL.xml
-$(Build.Repository.LocalPath)/libraries/python/dbxdemo/test*.py || true
-  displayName: 'Run Python Unit Tests for library code'
 - task: PublishTestResults@2
+  displayName: 'Publish Test Results **/TestResults-*Bearer.xml'
   inputs:
-    testResultsFiles: '**/TEST-*.xml'
-    failTaskOnFailedTests: true
-    publishRunAttachments: true
+    testResultsFormat: NUnit
+    testResultsFiles: '**/TestResults-*Bearer.xml'
+    testRunTitle: Windows PowerShell - Bearer
+    publishRunAttachments: false
 
-- script: |
-    cd $(Build.Repository.LocalPath)/libraries/python/dbxdemo
-    python3 setup.py sdist bdist_wheel
-    ls dist/
-  displayName: 'Build Python Wheel for Libs'
-
-- script: |
-    git diff --name-only --diff-filter=AMR HEAD^1 HEAD | xargs -I '{}' cp --parents -r '{}' $(Build.BinariesDirectory)
-
-    mkdir -p $(Build.BinariesDirectory)/libraries/python/libs
-    cp $(Build.Repository.LocalPath)/libraries/python/dbxdemo/dist/*.* $(Build.BinariesDirectory)/libraries/python/libs
-
-    mkdir -p $(Build.BinariesDirectory)/cicd-scripts
-    cp $(Build.Repository.LocalPath)/cicd-scripts/*.* $(Build.BinariesDirectory)/cicd-scripts
-
-  displayName: 'Get Changes'
-
-- task: ArchiveFiles@2
+- task: PublishTestResults@2
+  displayName: 'Publish Test Results **/TestResults-*ServicePrincipal.xml'
   inputs:
-    rootFolderOrFile: '$(Build.BinariesDirectory)'
-    includeRootFolder: false
-    archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-    replaceExistingArchive: true
+    testResultsFormat: NUnit
+    testResultsFiles: '**/TestResults-*ServicePrincipal.xml'
+    testRunTitle: Windows PowerShell Core - ServicePrincipal
+    publishRunAttachments: false
+
+- task: CopyFiles@2
+  displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
+  inputs:
+    Contents: |
+     Private\**
+     Public\**
+     *.psd1
+     *.psm1
+    TargetFolder: '$(build.artifactstagingdirectory)'
 
 - task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact: azure.databricks.cicd.Tools'
   inputs:
-    ArtifactName: 'DatabricksBuild'
+    ArtifactName: azure.databricks.cicd.Tools
