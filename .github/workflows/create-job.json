@@ -1,0 +1,15 @@
+{
+    "name": "mlflowjob",
+    "existing_cluster_id": "0422-113043-4dxx0ah",
+    "notebook_task": {
+      "notebook_path": "/Repos/babal@microsoft.com/adbgithubactionfy23/notebooks/Users/babal@microsoft.com/mlflow/ML End-to-End Example (Azure)"
+    },
+    "email_notifications": {
+      "on_success": [
+        "babal@microsoft.com"
+      ],
+      "on_failure": [
+        "babal@microsoft.com"
+      ]
+    }
+  }
