@@ -38,9 +38,9 @@ jobs:
         # Databricks token
         databricks-token: "dapi0b04a66cf7734b430110ab84a313beda-2" # optional
         # LOCAL_NOTEBOOKS_PATH
-        local-path: "notebooks/Users/babal@microsoft.com/mlflow/MLEnd-to-EndExampleClone"
+        local-path: "notebooks/Users/babal@microsoft.com/mlflow/"
         # REMOTE_NOTEBOOK_PATH
-        remote-path: "/Repos/babal@microsoft.com/adbgithubactionfy23/notebooks/Users/babal@microsoft.com/mlflow/MLEnd-to-EndExampleClone"
+        remote-path: "/Repos/babal@microsoft.com/adbgithubactionfy23/notebooks/Users/babal@microsoft.com/mlflow/"
     - name: Databrick Notebook Run
       # You may pin to the exact commit or the version.
       # uses: Herman-Wu/databrick-notebook-run-action@71cc3a2bb0fba4b26a2fd0655903fc7929a68f40
@@ -53,8 +53,8 @@ jobs:
         # Databrick Cluster ID
         databrick-cluster-id: "0422-113043-4dxx0ah" # default is abcdefghijk
         # Notebook in Databrick
-        databrick-local-path: "notebooks/Users/babal@microsoft.com/mlflow/MLEnd-to-EndExampleClone" # default is github/workspace/notebooks
+        databrick-local-path: "notebooks/Users/babal@microsoft.com/mlflow/" # default is github/workspace/notebooks
         # Workspace in Databrick
-        databrick-workspace-path: "/Repos/babal@microsoft.com/adbgithubactionfy23/notebooks/Users/babal@microsoft.com/mlflow/MLEnd-to-EndExampleClone" # default is Users/xxx@domain.com
+        databrick-workspace-path: "/Repos/babal@microsoft.com/adbgithubactionfy23/notebooks/Users/babal@microsoft.com/mlflow/" # default is Users/xxx@domain.com
         # File path to save process log
-        databrick-outfile-path: "notebooks/Users/babal@microsoft.com/mlflow/MLEnd-to-EndExampleClone" # default is github/workspace/notebooks
+        databrick-outfile-path: "notebooks/Users/babal@microsoft.com/mlflow/" # default is github/workspace/notebooks
