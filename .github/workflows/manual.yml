@@ -71,9 +71,4 @@ jobs:
     - name: Run build script
       run: "ls -R /home/runner/work/adbgithubactionfy23/"
       shell: bash
-    - name: Configure databricks profile
-      run: "/home/runner/.local/bin/databricks configure --profile qadeploy"
-      shell: bash
-    - name: Display Databricks Workspace
-      run: "databricks workspace ls --profile qadeploy"
-      shell: bash
+
