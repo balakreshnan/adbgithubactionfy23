@@ -69,5 +69,5 @@ jobs:
         # File path to save process log
         databrick-outfile-path: "/home/runner/work/adbgithubactionfy23/log/" # default is github/workspace/notebooks
     - name: Run build script
-      run: "ls /home/runner/work/adbgithubactionfy23/log/"
+      run: "ls -al /home/runner/work/adbgithubactionfy23/"
       shell: bash
