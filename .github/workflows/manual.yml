@@ -48,7 +48,7 @@ jobs:
         # Databricks token
         databricks-token: "dapi0b04a66cf7734b430110ab84a313beda-2" # optional
         # LOCAL_NOTEBOOKS_PATH
-        local-path: "notebooks/Users/babal@microsoft.com/mlflow/"
+        local-path: "/home/runner/work/adbgithubactionfy23/adbgithubactionfy23/main/notebooks/Users/babal@microsoft.com/mlflow/"
         # REMOTE_NOTEBOOK_PATH
         remote-path: "/Repos/babal@microsoft.com/adbgithubactionfy23/notebooks/Users/babal@microsoft.com/mlflow/"
     - name: Databrick Notebook Run
