@@ -53,8 +53,8 @@ jobs:
         # Databrick Cluster ID
         databrick-cluster-id: "0422-113043-4dxx0ah" # default is abcdefghijk
         # Notebook in Databrick
-        databrick-local-path: "github/workspace/notebooks/Users/babal@microsoft.com/mlflow/MLEnd-to-EndExampleClone" # default is github/workspace/notebooks
+        databrick-local-path: "notebooks/Users/babal@microsoft.com/mlflow/MLEnd-to-EndExampleClone" # default is github/workspace/notebooks
         # Workspace in Databrick
         databrick-workspace-path: "/Repos/babal@microsoft.com/adbgithubactionfy23/notebooks/Users/babal@microsoft.com/mlflow/MLEnd-to-EndExampleClone" # default is Users/xxx@domain.com
         # File path to save process log
-        databrick-outfile-path: "github/workspace/notebooks/Users/babal@microsoft.com/mlflow/MLEnd-to-EndExampleClone" # default is github/workspace/notebooks
+        databrick-outfile-path: "notebooks/Users/babal@microsoft.com/mlflow/MLEnd-to-EndExampleClone" # default is github/workspace/notebooks
