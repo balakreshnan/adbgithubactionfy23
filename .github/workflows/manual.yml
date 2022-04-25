@@ -68,3 +68,6 @@ jobs:
         databrick-workspace-path: "/Repos/babal@microsoft.com/adbgithubactionfy23/notebooks/Users/babal@microsoft.com/" # default is Users/xxx@domain.com
         # File path to save process log
         databrick-outfile-path: "/home/runner/work/adbgithubactionfy23/log/" # default is github/workspace/notebooks
+    - name: Run build script
+      run: "ls /home/runner/work/adbgithubactionfy23/log/"
+      shell: bash
