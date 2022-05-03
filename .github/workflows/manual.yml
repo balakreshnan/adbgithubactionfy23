@@ -71,4 +71,3 @@ jobs:
     - name: Run build script
       run: "ls -R /home/runner/work/adbgithubactionfy23/"
       shell: bash
-
